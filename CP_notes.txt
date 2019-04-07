@@ -1,0 +1,23 @@
+Vim Setup
+    1.Install vim
+    2.Install vimrc using "https://github.com/amix/vimrc"
+    3.In folder /.vim_runtime
+        add folder name "color"
+        download colorscheme from "https://github.com/crusoexia/vim-monokai"
+    4.In file vimrc add these:
+        syntax on
+        colorscheme "file_name"
+    5.Compile and Run using :
+        g++ "file_name.cpp" && ./a.out
+
+Git Setup
+    git clone "your SSH key"
+    git config --global user.name "Your Username"
+    git config --global user.email "Your Email"
+
+Git Push
+    git add --all
+    git commit -m "commit_message"
+    git push
+
+
