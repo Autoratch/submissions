@@ -10,8 +10,10 @@ Vim Setup
     5.Compile and Run using :
         g++ "file_name.cpp" && ./a.out
 
+Warning ***Do not use HTTPS for git***
+
 Git Setup Github
-    git clone "your HTTPS"
+    git clone "your SSH"
 
 Git Setup GitLab
     git clone "your SSH key"
