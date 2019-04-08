@@ -4,7 +4,7 @@ Vim Setup
     3.In folder .vim_runtime
         add folder name "color"
         download colorscheme from "https://github.com/crusoexia/vim-monokai"
-        copy folder to /home/user_name/.vim_runtime/color/
+        extract /colors/monokai.vim to /home/user_name/.vim_runtime/colors/
     4.In file .vimrc add these:
         syntax on
         colorscheme "file_name"
