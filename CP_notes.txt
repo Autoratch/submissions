@@ -1,10 +1,11 @@
 Vim Setup
     1.Install vim
     2.Install vimrc using "https://github.com/amix/vimrc"
-    3.In folder /.vim_runtime
+    3.In folder .vim_runtime
         add folder name "color"
         download colorscheme from "https://github.com/crusoexia/vim-monokai"
-    4.In file vimrc add these:
+        copy folder to /home/user_name/.vim_runtime/color/
+    4.In file .vimrc add these:
         syntax on
         colorscheme "file_name"
     5.Compile and Run using :
