@@ -1,9 +1,10 @@
 Vim Setup
     1.Install vim
     2.Install vimrc using "https://github.com/amix/vimrc"
-    3.Use these commands
+    3.Download color scheme from this repo "https://github.com/crusoexia/vim-monokai"
+    4.Use these commands
         mkdir -p ~/.vim/colors
-        Download the colors/monokai.vim file from the repo to ~/.vim/colors
+        copy monokai.vim to ~/.vim/colors
     4.In file .vimrc add these:
         syntax on
         colorscheme "file_name"
