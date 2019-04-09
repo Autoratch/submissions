@@ -1,14 +1,13 @@
 Vim Setup
     1.Install vim
     2.Install vimrc using "https://github.com/amix/vimrc"
-    3.Download color scheme from this repo "https://github.com/crusoexia/vim-monokai"
-    4.Use these commands
-        mkdir -p ~/.vim/colors
-        copy monokai.vim to ~/.vim/colors
-    4.In file .vimrc add these:
+    3.Download colorscheme from this repo "https://github.com/crusoexia/vim-monokai"
+    4."mkdir -p ~/.vim/colors"
+    5.Copy monokai.vim to ~/.vim/colors
+    6.In file .vimrc add these
         syntax on
         colorscheme "file_name"
-    5.Compile and Run using :
+    7.Compile and Run using :
         g++ "file_name.cpp" && ./a.out
 
 Warning ***Do not use HTTPS for git***
