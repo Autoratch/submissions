@@ -9,6 +9,17 @@ Vim Setup
         colorscheme "file_name"
     7.Compile and Run using :
         g++ "file_name.cpp" && ./a.out
+        
+Vim Setup Code
+    sudo apt-get install vim
+    sudo apt-get install git
+    git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+    sh ~/.vim_runtime/install_awesome_vimrc.sh
+    mkdir -p ~/.vim/colors
+    (download monokai.vim using above repo, or your google drive)
+    (extract monokai.vim to home)
+    sudo cp /home/autoratch/monokai.vim /home/autoratch/.vim/colors/
+    (add code in .vimrc using above code)
 
 Warning ***Do not use HTTPS for git***
 
