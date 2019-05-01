@@ -20,6 +20,14 @@ Vim Setup Code
     (extract monokai.vim to home)
     sudo cp /home/autoratch/monokai.vim /home/autoratch/.vim/colors/
     (add code in .vimrc using above code)
+   
+Tips from PeppaPig : keymap compile run (compile and run using shortcut)
+    go into .vim_runtime
+    open (or create) my_configs.vim
+    add this code
+        map <C-c> :!g++ % -o ~/compile.out && ~/compile.out
+    <C-c> is ctrl-c
+    now you can compile and run in vim using ctrl-c
 
 Warning ***Do not use HTTPS for git***
 
