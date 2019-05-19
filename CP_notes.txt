@@ -36,6 +36,13 @@ Tips from PeppaPig
 Warning ***Do not use HTTPS for git***
 
 Git Setup Github
+    *for new computer generate ssh key by running this in terminal*
+        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+        open file ~/.ssh/id_rsa.pub in gedit
+        go to Settings in github page
+        then ssh key
+        click new ssh key
+        copy and paste in lower block 
     git clone "your SSH"
 
 Git Setup GitLab
