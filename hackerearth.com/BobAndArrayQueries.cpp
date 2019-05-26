@@ -34,4 +34,4 @@ int main()
             cout << read(y)-read(x-1) << '\n';
         }
     }
-}
+} 
