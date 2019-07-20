@@ -2,7 +2,7 @@
 using namespace std;
 
 int m,n;
-char a[10][10];
+char a[11][11],ch[11][11];
 int mnx = INT_MAX,mny = INT_MAX,mxx,mxy;
 
 int main()
@@ -25,12 +25,14 @@ int main()
             if(ai<0 or ai>=m or aj<0 or aj>=n) continue;
             if(a[ai][aj]=='.') cnt++;
         }
-        if(cnt>=3) continue;
+        if(cnt>=3){ ch[i][j] = '.'; continue; }
         mnx = min(mnx,i); 
         mny = min(mny,j);
         mxx = max(mxx,i);
         mxy = max(mxy,j);
     }
+
+    for(int i = 0;i < m;i++) for(int j = 0;j < n;j++) if(ch[i][j]=='.') a[i][j] = '.';
 
     for(int i = mnx;i <= mxx;i++){ for(int j = mny;j <= mxy;j++) cout << a[i][j]; cout << '\n'; }
 }
