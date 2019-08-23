@@ -11,7 +11,7 @@ struct node
         node ret;
         ret.mxp = max(a.mxp,a.sum+b.mxp);
         ret.mxs = max(b.mxs,b.sum+a.mxs);
-        ret.mxa = max(max(a.mxa,b.mxa),a.mxp+b.mxs);
+        ret.mxa = max(max(a.mxa,b.mxa),a.mxs+b.mxp);
         ret.sum = a.sum+b.sum;
         return ret;
     }
