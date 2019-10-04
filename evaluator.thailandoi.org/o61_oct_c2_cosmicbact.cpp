@@ -1,86 +1,100 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define pii pair<pair<long long,long long>,int>
+#define x first
+#define h second
 
-const int N = 1e5 + 1;
+const int N = 1e5;
 
-struct node
-{
-    int idx;
-    int h;
-};
-
-int n,cnt;
-int ln;
-node res[N];
-vector<pair<int,int> > ah;
-set<pair<int,int> > ai;
-int l[N],r[N];
+int n;
+long long l,a,b;
+set<pii> s,t;
+long long ans[N];
 
 int main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0);
 
-    cin >> n >> ln;
+    cin >> n >> l;
 
-    for(int i = 0LL;i < n;i++)
+    for(int i = 0;i < n;i++)
     {
-        cin >> res[i].idx >> res[i].h;
-        ai.insert({res[i].idx,i});
-        ah.push_back({res[i].h,i});
+        cin >> a >> b;
+        b+=(long long)i;
+        s.insert({{a,b},i});
+    }
+    
+    auto it = s.begin(),it2 = s.begin();
+    it2++;
+    
+    long long ci,cx,ch,ni,nx,nh,sp;
+
+    while(it2!=s.end())
+    {
+        if(it==it2){ it2++; continue; }
+        ci = it->second,cx = it->first.first,ch = it->first.second;
+        ni = it2->second,nx = it2->first.first,nh = it2->first.second;
+        sp = nx-cx-1LL;
+        if(nh-ch>sp+1 or (nh-ch==sp+1 and ci<ni)) it2 = s.erase(it2);
+        else it++;
     }
 
-    sort(ah.begin(),ah.end());
+    for(auto it = s.begin();it != s.end();it++) t.insert({{-it->first.first,it->first.second},it->second});
+    
+    it = t.begin(),it2 = t.begin();
+    it2++;
 
-    for(int i = 0LL;i < n;i++)
+    while(it2!=t.end())
     {
-        int id = ah[i].second;
-        auto it = ai.lower_bound(make_pair(res[id].idx,id));
+        if(it==it2){ it2++; continue; }
+        ci = it->second,cx = it->first.first,ch = it->first.second;
+        ni = it2->second,nx = it2->first.first,nh = it2->first.second;
+        sp = nx-cx-1LL;
+        if(nh-ch>sp+1 or (nh-ch==sp+1 and ci<ni)) it2 = t.erase(it2);
+        else it++;
+    }
+
+    s.clear();
+    for(auto it = t.begin();it != t.end();it++) s.insert({{-it->first.first,it->first.second},it->second});
+
+    for(auto it = s.begin();it != s.end();it++)
+    {
         auto it2 = it; it2++;
-        while(it2!=ai.end())
+        ci = it->second,cx = it->first.first,ch = it->first.second;
+        ans[ci]++;
+        if(it==s.begin()) ans[ci]+=cx;
+        if(it2==s.end())
         {
-            int cur = it2->second;
-            int vid = res[id].h+abs(res[id].idx-res[cur].idx)+id,vc = res[cur].h+cur;
-            if(vid<vc or (vid==vc and id<cur)){ r[cur] = -1LL; it2 = ai.erase(it2); }
-            else break;
+            ans[ci]+=l-cx;
+            break;
         }
-        it2 = it; it2--;
-        while(true)
+        ni = it2->second,nx = it2->first.first,nh = it2->first.second;
+        sp = nx-cx-1LL;
+        if(ch<nh)
         {
-            int cur = it2->second;
-            int vid = res[id].h+abs(res[id].idx-res[cur].idx)+id,vc = res[cur].h+cur;
-            if(vid<vc or (vid==vc and id<cur)){ r[cur] = -1LL; it2 = ai.erase(it2); }
-            else break;
-            if(it2==ai.begin()) break;
-            else it2--;
+            ans[ci]+=nh-ch;
+            if(nh-ch==sp+1) ans[ci]--;
+            sp-=nh-ch;
+            ans[ci]+=sp/2LL,ans[ni]+=sp/2LL;
+            if(sp%2LL==1LL) 
+            {
+                if(ci<ni) ans[ci]++;
+                else ans[ni]++;
+            }
         }
-    }
-
-    for(auto it = ai.begin();it != ai.end();it++)
-    {
-        int cur = it->second;
-        auto itp = it; if(it!=ai.begin()) itp--;
-        auto itn = it; itn++;
-        if(it==ai.begin()) l[cur] = 0LL;
         else
         {
-            int prev = itp->second;
-            int idc = res[cur].idx,idp = res[prev].idx,hc = res[cur].h+cur,hp = res[prev].h+prev;
-            if(hc<hp) idc-=(hp-hc);
-            else idp+=(hc-hp);
-            l[cur] = idc-(idc-idp-1LL)/2LL;
-            if((idc-idp)%2LL==0LL)
+            ans[ni]+=ch-nh;
+            if(ch-nh==sp+1) ans[ni]--;
+            sp-=ch-nh;
+            ans[ci]+=sp/2LL,ans[ni]+=sp/2LL;
+            if(sp%2LL==1LL)
             {
-                if(idc==idp){ if(cur>prev) l[cur]++; }
-                else if(cur<prev) l[cur]--;
+                if(ci<ni) ans[ci]++;
+                else ans[ni]++;
             }
-            r[prev] = l[cur]-1LL;
         }
-        if(itn==ai.end()) r[cur] = ln;
     }
 
-    for(int i = 0LL;i < n;i++)
-    {
-        if(r[i]==-1LL) cout << "0\n";
-        else cout << r[i]-l[i]+1LL << '\n';
-    }
+    for(int i = 0;i < n;i++) cout << ans[i] << '\n';
 }
