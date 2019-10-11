@@ -9,7 +9,7 @@ Vim Setup
         colorscheme "file_name"
     7.Compile and Run using :
         g++ "file_name.cpp" && ./a.out
-        
+
 Vim Setup Code
     sudo apt-get install vim
     sudo apt-get install git
@@ -20,7 +20,7 @@ Vim Setup Code
     (extract monokai.vim to home)
     sudo cp /home/autoratch/monokai.vim /home/autoratch/.vim/colors/
     (add code in .vimrc using above code)
-   
+
 Tips from PeppaPig
     keymap compile run (compile and run using shortcut)
         go into .vim_runtime
@@ -42,7 +42,7 @@ Git Setup Github
         go to Settings in github page
         then ssh key
         click new ssh key
-        copy and paste in lower block 
+        copy and paste in lower block
     git clone "your SSH"
 
 Git Setup GitLab
@@ -55,4 +55,5 @@ Git Push
     git commit -m "commit_message"
     git push
 
-
+Copy file to clipboard
+    xsel -b < filename.cpp
