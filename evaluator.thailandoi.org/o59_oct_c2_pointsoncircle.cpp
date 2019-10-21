@@ -3,10 +3,19 @@ using namespace std;
 
 const int N = 1000;
 
-int n,k;
-int a[N][N];
-deque<pair<int,int> > q;
-bool used[N];
+int k,n,st;
+int pa[N];
+vector<tuple<int,int,int> > ed;
+vector<pair<int,int> > adj[N];
+int ans[N];
+
+int root(int x){ if(pa[x]==x) return x; else return pa[x] = root(pa[x]); }
+
+void dfs(int u,int p,int x)
+{
+    ans[u] = x;
+    for(auto pi : adj[u]) if(pi.second!=p) dfs(pi.second,u,x+pi.first);
+}
 
 int main()
 {
@@ -14,36 +23,29 @@ int main()
 
     cin >> k >> n;
 
-    for(int i = 0;i < n;i++) for(int j = 0;j < n;j++) cin >> a[i][j];
-
-    q.push_back({0,0});
-    used[0] = true;
-    int x,mn = INT_MAX;
-    for(int i = 0;i < n;i++) if(!used[i]) if(a[0][i]<mn) mn = a[0][i],x = i;
-    q.push_back({x,a[0][x]});
-    used[x] = true;
-
-    while(q.size()!=n)
+    for(int i = 0;i < n;i++) for(int j = 0;j < n;j++)
     {
-        int x = q.front().first,lx = q.front().second;
-        int y = q.back().first,ly = q.back().second;
-        int nx,mx = INT_MAX,ny,my = INT_MAX;
-        for(int i = 0;i < n;i++) if(!used[i])
-        {
-            if(a[x][i]<mx) mx = a[x][i],nx = i;
-            if(a[y][i]<my) my = a[y][i],ny = i;
-        }
-        if(mx<my)
-        {
-            q.push_front({nx,(lx-mx+k)%k});
-            used[nx] = true;
-        }
-        else
-        {
-            q.push_back({ny,(ly+my)%k});
-            used[ny] = true;
-        }
+        int x;
+        cin >> x;
+        if(i!=j) ed.push_back({x,i,j});
     }
 
-    while(!q.empty()) cout << q.front().second << '\n',q.pop_front();
+    for(int i = 0;i < n;i++) pa[i] = i;
+
+    sort(ed.begin(),ed.end());
+
+    for(auto x : ed)
+    {
+        int d,a,b; tie(d,a,b) = x;
+        if(root(a)==root(b)) continue;
+        adj[a].push_back({d,b});
+        adj[b].push_back({d,a});
+        pa[root(a)] = root(b);
+    }
+
+    for(int i = 0;i < n;i++) if(adj[i].size()==1) st = i;
+
+    dfs(st,st,0);
+
+    for(int i = 0;i < n;i++) cout << ans[i] << '\n';
 }
