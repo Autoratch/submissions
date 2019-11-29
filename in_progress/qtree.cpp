@@ -5,13 +5,14 @@ const int N = 1e5 + 1;
 
 int t,n;
 vector<tuple<int,int,int> > adj[N];
-int sz[N],chr[N],chs[N],pos[N],idxst[N];
-vector<int> chain[N];
+int sz[N],chr[N],idxst[N];
 int dp[20][N],pa[N],lv[N];
 int st[N],curst;
 int res[N];
-struct node{ int val; friend node operator+(const node &a,const node &b){ if(a.val>b.val) return a; else return b; } }tree[N << 2];
+struct node{ int val; friend node operator+(const node &a,const node &b){ if(a.val>b.val) return a; else return b; } }tree[N << 4];
 int edj[N];
+map<pair<int,int>,int> edjval;
+tuple<int,int,int> edge[N];
 
 void dfs_sz(int u,int p)
 {
@@ -23,12 +24,12 @@ void dfs_hld(int root,int u,int p)
 {
     st[++curst] = u;
     idxst[u] = curst;
-    if(root==u) chain[root].resize(2),chain[u][1] = u;
     chr[u] = root;
-    pos[u] = ++chs[root],chain[root][pos[u]] = u;
-    int mx = 0,idx,ed,idd;
-    for(auto [d,v,id] : adj[u]) if(v!=p and sz[v]>mx) mx = sz[v],idx = v,ed = d,idd = id;
-    res[curst] = ed,edj[idd] = curst,dfs_hld(root,idx,u);
+    int mx = 0,idx,ed,idd,chh = 0;
+    for(auto [d,v,id] : adj[u]) if(v!=p and sz[v]>mx) mx = sz[v],idx = v,ed = d,idd = id,chh++;
+    if(!chh) return;
+    res[curst] = ed,edj[idd] = curst;
+    dfs_hld(root,idx,u);
     for(auto [d,v,id] : adj[u]) if(v!=p and v!=idx) dfs_hld(v,v,u);
 }
 
@@ -41,7 +42,7 @@ void dfs_lca(int u,int p,int l)
 int lca(int a,int b)
 {
     if(lv[a]<lv[b]) swap(a,b);
-    for(int i = 19;i >= 0;i--) if(lv[dp[i][a]]<=lv[b]) a = dp[i][a];
+    for(int i = 19;i >= 0;i--) if(lv[dp[i][a]]>=lv[b]) a = dp[i][a];
     if(a==b) return a;
     for(int i = 19;i >= 0;i--) if(dp[i][a]!=dp[i][b]) a = dp[i][a],b = dp[i][b];
     return dp[0][a];
@@ -66,20 +67,21 @@ void update(int l,int r,int idx,int x,int k)
 
 int read(int l,int r,int idx,int x,int y)
 {
-    if(x>r or y<l) return 0;
+    if(x>y or x>r or y<l) return 0;
     if(x<=l and y>=r) return tree[idx].val;
     int m = (l+r)/2;
-    return read(l,m,idx*2,x,y)+read(m+1,r,idx*2+1,x,y);
+    return max(read(l,m,idx*2,x,y),read(m+1,r,idx*2+1,x,y));
 }
 
 int queryup(int x,int y)
 {
-    int cx = chr[x],cy = chr[y];
+    if(x==y) return 0;
     int ret = 0;
     while(true)
     {
-        if(cx==cy){ ret = max(ret,read(1,n,1,idxst[y],idxst[x])); break; }
-        ret = max(ret,read(1,n,1,idxst[chr[x]],idxst[x]));
+        if(chr[x]==chr[y]){ ret = max(ret,read(1,n,1,idxst[y],idxst[x]-1)); break; }
+        if(x!=chr[x]) ret = max(ret,read(1,n,1,idxst[chr[x]],idxst[x]-1));
+        ret = max(ret,edjval[{chr[x],dp[0][chr[x]]}]);
         x = dp[0][chr[x]];
     }
     return ret;
@@ -98,12 +100,16 @@ int main()
         {
             int a,b,d;
             cin >> a >> b >> d;
-            adj[a].push_back({d,b,i});
-            adj[b].push_back({d,a,i});
+            adj[a].push_back({d,b,i+1});
+            adj[b].push_back({d,a,i+1});
+            edjval[{a,b}] = d;
+            edjval[{b,a}] = d;
+            edge[i+1] = {a,b,d};
         }
+        curst = 0;
         dfs_sz(1,0);
         dfs_hld(1,1,0);
-        dfs_lca(1,1,0);
+        dfs_lca(1,0,1);
         for(int i = 1;i < 20;i++) for(int j = 1;j <= n;j++) dp[i][j] = dp[i-1][dp[i-1][j]];
         build(1,n,1);
         while(true)
@@ -113,7 +119,12 @@ int main()
             if(inp=="DONE") break;
             int x,y;
             cin >> x >> y;
-            if(inp=="CHANGE") update(1,n,1,edj[x],y);
+            if(inp=="CHANGE")
+            {
+                update(1,n,1,edj[x],y);
+                auto [a,b,d] = edge[x];
+                edjval[{a,b}] = edjval[{b,a}] = y;
+            }
             else
             {
                 int lc = lca(x,y);
