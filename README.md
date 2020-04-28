@@ -14,6 +14,6 @@ GNU G++17 | Vim | Ubuntu 18.04
 
 [Codeforces](https://codeforces.com/profile/Autoratch/) | 
 [OJ.UZ](https://oj.uz/profile/Autoratch) | 
-[SPOJ](https://spoj.com/users/Autoratch) |
+[SPOJ](https://spoj.com/users/autoratch) |
 
 [Linkedin](https://www.linkedin.com/in/autoratch/) | [Website](http://krittitee.me/)
