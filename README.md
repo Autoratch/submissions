@@ -17,3 +17,5 @@ GNU G++17 | Vim | Ubuntu 18.04
 [SPOJ](https://spoj.com/users/autoratch) |
 
 [Linkedin](https://www.linkedin.com/in/autoratch/) | [Website](http://krittitee.me/)
+
+[Facebook](https://facebook.com/Autoratch/) | [Instagram](https://instagram.com/autoratch_/)
