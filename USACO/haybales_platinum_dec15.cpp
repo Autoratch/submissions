@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+ 
 const int N = 1 << 18;
 
 int n,q;
