@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 1e6 + 1;
+const int N = 1e6 + 1; 
 
 int n,w;
 int a[N],res[N];
