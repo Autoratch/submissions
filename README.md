@@ -4,7 +4,7 @@ Solution code to submissions I made in competitive programming.
 
 The repo contains code written since Nov 28, 2018. (After I finished IPST 1 in Grade 9).
 
-Repo started Apr 7, 2019.
+Repo started on Apr 7, 2019.
 
 ## Compiler and editor
 
